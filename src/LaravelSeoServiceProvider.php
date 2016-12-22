@@ -53,6 +53,9 @@ class LaravelSeoServiceProvider extends PackageServiceProvider
     public function boot()
     {
         parent::boot();
+
+        $this->publishConfig();
+        $this->publishMigrations();
     }
 
     /**
