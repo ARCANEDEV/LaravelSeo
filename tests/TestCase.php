@@ -15,6 +15,16 @@ abstract class TestCase extends BaseTestCase
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->migrate();
+    }
+
+    /**
      * Get package providers.
      *
      * @param  \Illuminate\Foundation\Application  $app
@@ -49,6 +59,33 @@ abstract class TestCase extends BaseTestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-        //
+        $app['config']->set('database.default', 'testbench');
+        $app['config']->set('database.connections.testbench', [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ]);
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Other Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Migrate the tables.
+     */
+    protected function migrate()
+    {
+        $paths = array_map('realpath', [
+            __DIR__.'/../database/migrations',
+            __DIR__.'/fixtures/migrations',
+        ]);
+
+        foreach ($paths as $path) {
+            $this->artisan('migrate', [
+                '--database' => 'testbench',
+                '--realpath' => $path,
+            ]);
+        }
     }
 }
