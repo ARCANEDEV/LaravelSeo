@@ -39,7 +39,7 @@ class Seo extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'keywords', 'description', 'metas', 'noindex'];
+    protected $fillable = ['title', 'description', 'keywords', 'metas', 'noindex'];
 
     /**
      * The attributes that should be casted to native types.
