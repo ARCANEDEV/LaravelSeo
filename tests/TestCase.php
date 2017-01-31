@@ -1,6 +1,6 @@
 <?php namespace Arcanedev\LaravelSeo\Tests;
 
-use Orchestra\Testbench\TestCase as BaseTestCase;
+use Orchestra\Testbench\BrowserKit\TestCase as BaseTestCase;
 
 /**
  * Class     TestCase
@@ -34,6 +34,7 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
+            \Orchestra\Database\ConsoleServiceProvider::class,
             \Arcanedev\LaravelSeo\LaravelSeoServiceProvider::class,
         ];
     }
