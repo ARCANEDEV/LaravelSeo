@@ -1,14 +1,14 @@
-<?php namespace Arcanedev\LaravelSeo\Bases;
+<?php namespace Arcanedev\LaravelSeo\Models;
 
-use Arcanedev\Support\Bases\Model as BaseModel;
+use Arcanedev\Support\Bases\Model;
 
 /**
- * Class     Model
+ * Class     AbstractModel
  *
- * @package  Arcanedev\LaravelSeo\Bases
+ * @package  Arcanedev\LaravelSeo\Models
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class Model extends BaseModel
+abstract class AbstractModel extends Model
 {
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
@@ -21,9 +21,9 @@ class Model extends BaseModel
      */
     public function __construct(array $attributes = [])
     {
-        $this->setConnection(config('laravel-seo.database.connection', null));
-        $this->setPrefix(config('laravel-seo.database.prefix', null));
-
         parent::__construct($attributes);
+
+        $this->setConnection(config('seo.database.connection', null));
+        $this->setPrefix(config('seo.database.prefix', 'seo_'));
     }
 }

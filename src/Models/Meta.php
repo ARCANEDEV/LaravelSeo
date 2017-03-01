@@ -19,7 +19,7 @@
  *
  * @property  \Illuminate\Database\Eloquent\Model  seoable
  */
-class Meta extends Model
+class Meta extends AbstractModel
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties

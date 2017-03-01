@@ -1,5 +1,7 @@
 <?php namespace Arcanedev\LaravelSeo\Traits;
 
+use Arcanedev\LaravelSeo\Models\Meta;
+
 /**
  * Trait     Seoable
  *
@@ -23,7 +25,7 @@ trait Seoable
      */
     public function seo()
     {
-        return $this->morphOne(\Arcanedev\LaravelSeo\Models\Meta::class, 'seoable');
+        return $this->morphOne(Meta::class, 'seoable');
     }
 
     /* ------------------------------------------------------------------------------------------------
