@@ -19,21 +19,7 @@ class LaravelSeoServiceProvider extends PackageServiceProvider
      *
      * @var string
      */
-    protected $package = 'laravel-seo';
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Getters & Setters
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Get the base path of the package.
-     *
-     * @return string
-     */
-    public function getBasePath()
-    {
-        return dirname(__DIR__);
-    }
+    protected $package = 'seo';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -44,6 +30,8 @@ class LaravelSeoServiceProvider extends PackageServiceProvider
      */
     public function register()
     {
+        parent::register();
+
         $this->registerConfig();
     }
 
@@ -55,7 +43,9 @@ class LaravelSeoServiceProvider extends PackageServiceProvider
         parent::boot();
 
         $this->publishConfig();
-        $this->publishMigrations();
+
+        $this->loadMigrations();
+        //$this->publishMigrations();
     }
 
     /**
@@ -65,6 +55,8 @@ class LaravelSeoServiceProvider extends PackageServiceProvider
      */
     public function provides()
     {
-        return [];
+        return [
+            //
+        ];
     }
 }

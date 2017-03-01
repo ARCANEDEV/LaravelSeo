@@ -6,7 +6,7 @@
  * @package  Arcanedev\LaravelSeo\Traits
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  *
- * @property  \Arcanedev\LaravelSeo\Models\Seo  seo
+ * @property  \Arcanedev\LaravelSeo\Models\Meta  seo
  *
  * @method  \Illuminate\Database\Eloquent\Relations\MorphOne  morphOne(string $related, string $name, string $type = null, string $id = null, string $localKey = null)
  */
@@ -23,7 +23,7 @@ trait Seoable
      */
     public function seo()
     {
-        return $this->morphOne(\Arcanedev\LaravelSeo\Models\Seo::class, 'seoable');
+        return $this->morphOne(\Arcanedev\LaravelSeo\Models\Meta::class, 'seoable');
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ trait Seoable
      *
      * @param  array  $attributes
      *
-     * @return \Arcanedev\LaravelSeo\Models\Seo
+     * @return \Arcanedev\LaravelSeo\Models\Meta
      */
     public function createSeo(array $attributes)
     {
