@@ -1,9 +1,7 @@
 <?php namespace Arcanedev\LaravelSeo\Models;
 
-use Arcanedev\LaravelSeo\Bases\Model;
-
 /**
- * Class     Seo
+ * Class     Meta
  *
  * @package  Arcanedev\LaravelSeo\Models
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
@@ -21,19 +19,12 @@ use Arcanedev\LaravelSeo\Bases\Model;
  *
  * @property  \Illuminate\Database\Eloquent\Model  seoable
  */
-class Seo extends Model
+class Meta extends AbstractModel
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'seo';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -64,9 +55,9 @@ class Seo extends Model
      */
     public function __construct(array $attributes = [])
     {
-        $this->setTable(config('laravel-seo.database.table', 'seo'));
-
         parent::__construct($attributes);
+
+        $this->setTable(config('laravel-seo.database.table', 'metas'));
     }
 
     /* ------------------------------------------------------------------------------------------------

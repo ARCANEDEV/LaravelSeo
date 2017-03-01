@@ -49,7 +49,7 @@ class SeoTest extends TestCase
 
         $seo = $post->seo;
 
-        $this->seeInDatabase('seo', [
+        $this->seeInDatabase('seo_metas', [
             'id'           => $seo->id,
             'seoable_id'   => 1,
             'seoable_type' => Post::class,
