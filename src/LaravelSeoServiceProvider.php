@@ -33,6 +33,10 @@ class LaravelSeoServiceProvider extends PackageServiceProvider
         parent::register();
 
         $this->registerConfig();
+
+        $this->singleton(Contracts\RedirectorFactory::class, function ($app) {
+            return new RedirectorManager($app);
+        });
     }
 
     /**
@@ -41,6 +45,8 @@ class LaravelSeoServiceProvider extends PackageServiceProvider
     public function boot()
     {
         parent::boot();
+
+        $this->registerProvider(Providers\RouteServiceProvider::class);
 
         $this->publishConfig();
 

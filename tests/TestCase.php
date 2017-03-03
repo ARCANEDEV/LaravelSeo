@@ -66,6 +66,49 @@ abstract class TestCase extends BaseTestCase
             'database' => ':memory:',
             'prefix'   => '',
         ]);
+
+        $app['config']->set('seo.redirector.drivers.config.options.redirects', [
+            '/non-existing-page-url' => '/existing-page-url',
+            '/old-blog/{slug}'       => '/new-blog/{slug}',
+        ]);
+
+        $this->setUpRoutes($app['router']);
+    }
+
+    /**
+     * Setup the routes.
+     *
+     * @param  \Illuminate\Routing\Router  $router
+     */
+    private function setUpRoutes($router)
+    {
+        $router->get('existing-page', function () {
+            return 'existing page';
+        });
+
+        $router->get('response-code/{code}', function ($code) {
+            abort($code);
+        });
+    }
+
+    /* -----------------------------------------------------------------
+     |  Custom Assert Methods
+     | -----------------------------------------------------------------
+     */
+    /**
+     * Assert whether the client was redirected to a given URI.
+     *
+     * @param  string  $uri
+     * @param  array   $with
+     *
+     * @return self
+     */
+    public function assertRedirectedTo($uri, $with = [])
+    {
+        self::assertInstanceOf(\Illuminate\Http\RedirectResponse::class, $this->response);
+        self::assertEquals($this->app['url']->to($uri), $this->response->headers->get('Location'));
+
+        return $this;
     }
 
     /* ------------------------------------------------------------------------------------------------

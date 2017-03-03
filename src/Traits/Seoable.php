@@ -33,7 +33,7 @@ trait Seoable
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Create a seo.
+     * Create a seo metas.
      *
      * @param  array  $attributes
      *
