@@ -52,7 +52,6 @@ class LaravelSeoServiceProvider extends PackageServiceProvider
 
         $this->loadMigrations();
         $this->loadTranslations();
-        //$this->publishMigrations();
     }
 
     /**

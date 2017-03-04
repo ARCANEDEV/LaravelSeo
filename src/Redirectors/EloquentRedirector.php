@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\LaravelSeo\Redirectors;
 
 use Arcanedev\LaravelSeo\Contracts\Redirector;
+use Arcanedev\LaravelSeo\Models\Redirect;
 
 /**
  * Class     EloquentRedirector
@@ -25,7 +26,7 @@ class EloquentRedirector extends AbstractRedirector implements Redirector
         $redirects = $this->getRedirectModel()->get();
 
         return $redirects->keyBy('old_url')
-            ->transform(function ($item) {
+            ->transform(function (Redirect $item) {
                 return [$item->new_url, $item->status];
             })
             ->toArray();
