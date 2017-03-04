@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\LaravelSeo\Providers;
 
 use Arcanedev\LaravelSeo\Http\Middleware\RedirectsMissingPages;
+use Arcanedev\LaravelSeo\Seo;
 use Arcanedev\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 
@@ -18,7 +19,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (config('seo.redirector.enabled', false))
+        if (Seo::getConfig('redirector.enabled', false))
             $this->app->make(HttpKernel::class)->pushMiddleware(RedirectsMissingPages::class);
 
         parent::boot();

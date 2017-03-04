@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\LaravelSeo\Tests;
 
+use Arcanedev\LaravelSeo\Seo;
 use Orchestra\Testbench\BrowserKit\TestCase as BaseTestCase;
 
 /**
@@ -67,7 +68,7 @@ abstract class TestCase extends BaseTestCase
             'prefix'   => '',
         ]);
 
-        $app['config']->set('seo.redirector.drivers.config.options.redirects', [
+        $app['config']->set(Seo::KEY.'.redirector.drivers.config.options.redirects', [
             '/non-existing-page-url' => '/existing-page-url',
             '/old-blog/{slug}'       => '/new-blog/{slug}',
         ]);

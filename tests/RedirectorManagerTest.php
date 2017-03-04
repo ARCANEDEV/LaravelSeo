@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\LaravelSeo\Tests;
 
 use Arcanedev\LaravelSeo\Models\Redirect;
+use Arcanedev\LaravelSeo\Seo;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -103,8 +104,8 @@ class RedirectorManagerTest extends TestCase
         $this->assertCount(2, $redirects);
 
         $expected = [
-            '/non-existing-page-url' => ['/existing-page-url', 301],
-            '/old-blog/{slug}'       => ['/new-blog/{slug}', 301],
+            '/non-existing-page-url' => ['/existing-page-url', Response::HTTP_MOVED_PERMANENTLY],
+            '/old-blog/{slug}'       => ['/new-blog/{slug}', Response::HTTP_MOVED_PERMANENTLY],
         ];
 
         $this->assertSame($expected, $redirects);
@@ -171,14 +172,13 @@ class RedirectorManagerTest extends TestCase
     public function it_can_optionally_set_the_redirect_status_code()
     {
         $this->setRedirectUrl([
-            'temporarily-moved' => ['just-for-now', 302],
+            'temporarily-moved' => ['just-for-now', Response::HTTP_FOUND],
         ]);
 
         $this->get('temporarily-moved');
 
         $this->assertRedirectedTo('just-for-now');
-
-        $this->assertResponseStatus(302);
+        $this->assertResponseStatus(Response::HTTP_FOUND);
     }
 
     /** @test */
@@ -209,8 +209,17 @@ class RedirectorManagerTest extends TestCase
         $this->assertResponseStatus(500);
     }
 
-    private function setRedirectUrl($urls)
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
+     */
+    /**
+     * Set the redirect URL.
+     *
+     * @param  array  $urls
+     */
+    private function setRedirectUrl(array $urls)
     {
-        $this->app['config']->set('seo.redirector.drivers.config.options.redirects', $urls);
+        $this->app['config']->set(Seo::KEY.'.redirector.drivers.config.options.redirects', $urls);
     }
 }

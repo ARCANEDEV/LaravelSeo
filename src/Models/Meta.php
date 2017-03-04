@@ -1,5 +1,7 @@
 <?php namespace Arcanedev\LaravelSeo\Models;
 
+use Arcanedev\LaravelSeo\Seo;
+
 /**
  * Class     Meta
  *
@@ -57,7 +59,7 @@ class Meta extends AbstractModel
     {
         parent::__construct($attributes);
 
-        $this->setTable(config('seo.metas.table', 'metas'));
+        $this->setTable(Seo::getConfig('metas.table', 'metas'));
     }
 
     /* -----------------------------------------------------------------

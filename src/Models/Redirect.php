@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\LaravelSeo\Models;
 
+use Arcanedev\LaravelSeo\Seo;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -50,7 +51,7 @@ class Redirect extends AbstractModel
     {
         parent::__construct($attributes);
 
-        $this->setTable(config('seo.redirects.table', 'redirects'));
+        $this->setTable(Seo::getConfig('redirects.table', 'redirects'));
     }
 
     /* -----------------------------------------------------------------

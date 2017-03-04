@@ -22,17 +22,7 @@ class RedirectorManager extends Manager implements RedirectorFactory
      */
     public function getDefaultDriver()
     {
-        return $this->getConfig('redirector.default', 'config');
-    }
-
-    /**
-     * Get the config repository.
-     *
-     * @return \Illuminate\Contracts\Config\Repository
-     */
-    protected function config()
-    {
-        return $this->app['config'];
+        return Seo::getConfig('redirector.default', 'config');
     }
 
     /* -----------------------------------------------------------------
@@ -69,7 +59,7 @@ class RedirectorManager extends Manager implements RedirectorFactory
     public function createEloquentDriver()
     {
         return $this->buildDriver('eloquent', [
-            'model' => $this->getConfig('redirects.model'),
+            'model' => Seo::getConfig('redirects.model'),
         ]);
     }
 
@@ -88,22 +78,9 @@ class RedirectorManager extends Manager implements RedirectorFactory
     private function buildDriver($driver, array $extra = [])
     {
         $router  = $this->app->make(\Illuminate\Contracts\Routing\Registrar::class);
-        $class   = $this->getConfig("redirector.drivers.$driver.class");
-        $options = $this->getConfig("redirector.drivers.$driver.options", []);
+        $class   = Seo::getConfig("redirector.drivers.$driver.class");
+        $options = Seo::getConfig("redirector.drivers.$driver.options", []);
 
         return new $class($router, array_merge($extra, $options));
-    }
-
-    /**
-     * Get the seo config.
-     *
-     * @param  string      $key
-     * @param  mixed|null  $default
-     *
-     * @return mixed
-     */
-    private function getConfig($key, $default = null)
-    {
-        return $this->config()->get("seo.$key", $default);
     }
 }

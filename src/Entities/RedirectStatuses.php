@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\LaravelSeo\Entities;
 
+use Arcanedev\LaravelSeo\Seo;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -17,6 +18,8 @@ class RedirectStatuses
     /**
      * Get the all status names.
      *
+     * @param  string|null  $locale
+     *
      * @return \Illuminate\Support\Collection
      */
     public static function all($locale = null)
@@ -29,7 +32,7 @@ class RedirectStatuses
         ];
 
         return collect(array_combine($codes, $codes))->transform(function ($code) use ($locale) {
-            return trans("seo::redirections.statuses.{$code}", [], $locale);
+            return Seo::getTrans("redirections.statuses.{$code}", [], $locale);
         });
     }
 
@@ -48,6 +51,7 @@ class RedirectStatuses
      *
      * @param  int          $key
      * @param  string|null  $default
+     * @param  string|null  $locale
      *
      * @return string
      */

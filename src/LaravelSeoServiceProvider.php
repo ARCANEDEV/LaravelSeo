@@ -19,7 +19,7 @@ class LaravelSeoServiceProvider extends PackageServiceProvider
      *
      * @var string
      */
-    protected $package = 'seo';
+    protected $package = 'laravel-seo';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions

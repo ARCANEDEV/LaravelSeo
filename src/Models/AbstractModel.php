@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\LaravelSeo\Models;
 
+use Arcanedev\LaravelSeo\Seo;
 use Arcanedev\Support\Bases\Model;
 
 /**
@@ -23,7 +24,7 @@ abstract class AbstractModel extends Model
     {
         parent::__construct($attributes);
 
-        $this->setConnection(config('seo.database.connection', null));
-        $this->setPrefix(config('seo.database.prefix', 'seo_'));
+        $this->setConnection(Seo::getConfig('database.connection', null));
+        $this->setPrefix(Seo::getConfig('database.prefix', 'seo_'));
     }
 }

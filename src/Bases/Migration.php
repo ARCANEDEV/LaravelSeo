@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\LaravelSeo\Bases;
 
+use Arcanedev\LaravelSeo\Seo;
 use Arcanedev\Support\Bases\Migration as BaseMigration;
 
 /**
@@ -19,7 +20,7 @@ abstract class Migration extends BaseMigration
      */
     public function __construct()
     {
-        $this->setConnection(config('seo.database.connection', null));
-        $this->setPrefix(config('seo.database.prefix', 'seo_'));
+        $this->setConnection(Seo::getConfig('database.connection', null));
+        $this->setPrefix(Seo::getConfig('database.prefix', 'seo_'));
     }
 }
