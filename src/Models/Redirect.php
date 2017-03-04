@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\LaravelSeo\Models;
 
+use Arcanedev\LaravelSeo\Entities\RedirectStatuses;
 use Arcanedev\LaravelSeo\Seo;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @property  string          old_url
  * @property  string          new_url
  * @property  int             status
+ * @property  string          status_name
  * @property  \Carbon\Carbon  created_at
  * @property  \Carbon\Carbon  updated_at
  */
@@ -52,6 +54,20 @@ class Redirect extends AbstractModel
         parent::__construct($attributes);
 
         $this->setTable(Seo::getConfig('redirects.table', 'redirects'));
+    }
+
+    /* -----------------------------------------------------------------
+     |  Getters & Setters
+     | -----------------------------------------------------------------
+     */
+    /**
+     * Get the `status_name` attribute.
+     *
+     * @return string
+     */
+    public function getStatusNameAttribute()
+    {
+        return RedirectStatuses::get($this->status);
     }
 
     /* -----------------------------------------------------------------
