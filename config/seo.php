@@ -51,7 +51,7 @@ return [
                 'class'   => \Arcanedev\LaravelSeo\Redirectors\EloquentRedirector::class,
 
                 'options' => [
-                    'model' => \Arcanedev\LaravelSeo\Models\Redirect::class,
+                    //
                 ],
             ],
         ],

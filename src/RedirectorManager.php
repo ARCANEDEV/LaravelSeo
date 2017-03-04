@@ -22,7 +22,7 @@ class RedirectorManager extends Manager implements RedirectorFactory
      */
     public function getDefaultDriver()
     {
-        return $this->config()->get('seo.redirector.default', 'config');
+        return $this->getConfig('redirector.default', 'config');
     }
 
     /**
@@ -35,10 +35,6 @@ class RedirectorManager extends Manager implements RedirectorFactory
         return $this->app['config'];
     }
 
-    /* -----------------------------------------------------------------
-     |  Main Methods
-     | -----------------------------------------------------------------
-     */
     /* -----------------------------------------------------------------
      |  Main Methods
      | -----------------------------------------------------------------
@@ -72,7 +68,9 @@ class RedirectorManager extends Manager implements RedirectorFactory
      */
     public function createEloquentDriver()
     {
-        return $this->buildDriver('eloquent');
+        return $this->buildDriver('eloquent', [
+            'model' => $this->getConfig('redirects.model'),
+        ]);
     }
 
     /* -----------------------------------------------------------------
@@ -83,15 +81,29 @@ class RedirectorManager extends Manager implements RedirectorFactory
      * Build the redirector.
      *
      * @param  string  $driver
+     * @param  array   $extra
      *
-     * @return \Arcanedev\LaravelSeo\Contracts\Redirector
+     * @return mixed
      */
-    private function buildDriver($driver)
+    private function buildDriver($driver, array $extra = [])
     {
         $router  = $this->app->make(\Illuminate\Contracts\Routing\Registrar::class);
-        $class   = $this->config()->get("seo.redirector.drivers.$driver.class");
-        $options = $this->config()->get("seo.redirector.drivers.$driver.options", []);
+        $class   = $this->getConfig("redirector.drivers.$driver.class");
+        $options = $this->getConfig("redirector.drivers.$driver.options", []);
 
-        return new $class($router, $options);
+        return new $class($router, array_merge($extra, $options));
+    }
+
+    /**
+     * Get the seo config.
+     *
+     * @param  string      $key
+     * @param  mixed|null  $default
+     *
+     * @return mixed
+     */
+    private function getConfig($key, $default = null)
+    {
+        return $this->config()->get("seo.$key", $default);
     }
 }
