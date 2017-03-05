@@ -21,14 +21,27 @@ class Seo
     /**
      * Get the seo config.
      *
-     * @param  string      $key
-     * @param  mixed|null  $default
+     * @param  string|null  $key
+     * @param  mixed|null   $default
      *
      * @return mixed
      */
-    public static function getConfig($key, $default = null)
+    public static function getConfig($key = null, $default = null)
     {
-        return config(self::KEY.'.'.$key, $default);
+        $key = self::KEY.(is_null($key) ? '' : '.'.$key);
+
+        return config()->get($key, $default);
+    }
+
+    /**
+     * Set the seo config.
+     *
+     * @param  string      $key
+     * @param  mixed|null  $value
+     */
+    public static function setConfig($key, $value = null)
+    {
+        config()->set(self::KEY.'.'.$key, $value);
     }
 
     /**

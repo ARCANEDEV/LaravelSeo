@@ -68,7 +68,7 @@ abstract class TestCase extends BaseTestCase
             'prefix'   => '',
         ]);
 
-        $app['config']->set(Seo::KEY.'.redirector.drivers.config.options.redirects', [
+        Seo::setConfig('redirector.drivers.config.options.redirects', [
             '/non-existing-page-url' => '/existing-page-url',
             '/old-blog/{slug}'       => '/new-blog/{slug}',
         ]);
