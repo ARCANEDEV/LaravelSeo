@@ -16,7 +16,7 @@ return [
      |  Tables
      | -----------------------------------------------------------------
      */
-    'metas' => [
+    'metas'     => [
         'table' => 'metas',
         'model' => \Arcanedev\LaravelSeo\Models\Meta::class,
     ],
@@ -51,7 +51,10 @@ return [
                 'class'   => \Arcanedev\LaravelSeo\Redirectors\EloquentRedirector::class,
 
                 'options' => [
-                    //
+                    'cache' => [
+                        'key'      => 'seo-redirects',
+                        'duration' => 30, // minutes
+                    ],
                 ],
             ],
         ],

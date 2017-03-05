@@ -39,6 +39,8 @@ class CreateSeoRedirectsTable extends Migration
             $table->text('new_url');
             $table->integer('status');
             $table->timestamps();
+
+            $table->unique('old_url');
         });
     }
 }

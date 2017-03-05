@@ -22,14 +22,24 @@ class EloquentRedirector extends AbstractRedirector implements Redirector
      */
     public function getRedirectedUrls()
     {
-        /** @var  \Illuminate\Database\Eloquent\Collection  $redirects */
-        $redirects = $this->getRedirectModel()->get();
-
-        return $redirects->keyBy('old_url')
+        return $this->getCachedRedirects()
+            ->keyBy('old_url')
             ->transform(function (Redirect $item) {
                 return [$item->new_url, $item->status];
             })
             ->toArray();
+    }
+
+    /**
+     * Get the cached redirection urls.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    protected function getCachedRedirects()
+    {
+        return cache()->remember($this->getOption('cache.key'), $this->getOption('cache.duration'), function () {
+            return $this->getRedirectModel()->get();
+        });
     }
 
     /**
