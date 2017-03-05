@@ -35,8 +35,8 @@ class CreateSeoRedirectsTable extends Migration
     {
         $this->createSchema(function(Blueprint $table) {
             $table->increments('id');
-            $table->text('old_url');
-            $table->text('new_url');
+            $table->string('old_url', 255);
+            $table->string('new_url', 255);
             $table->integer('status');
             $table->timestamps();
 
