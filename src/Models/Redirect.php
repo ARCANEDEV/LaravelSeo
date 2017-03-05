@@ -56,6 +56,22 @@ class Redirect extends AbstractModel
         $this->setTable(Seo::getConfig('redirects.table', 'redirects'));
     }
 
+    /**
+     * The "booting" method of the model.
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saved(function() {
+            static::clearCache();
+        });
+
+        static::deleted(function() {
+            static::clearCache();
+        });
+    }
+
     /* -----------------------------------------------------------------
      |  Getters & Setters
      | -----------------------------------------------------------------
@@ -94,5 +110,19 @@ class Redirect extends AbstractModel
         $redirect->save();
 
         return $redirect;
+    }
+
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
+     */
+    /**
+     * Clear the cached data.
+     */
+    protected static function clearCache()
+    {
+        $key = Seo::getConfig('redirector.drivers.eloquent.options.cache.key', 'seo-redirects');
+
+        cache()->forget($key);
     }
 }
