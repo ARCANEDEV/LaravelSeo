@@ -37,6 +37,7 @@ class MetaTest extends TestCase
         $post->createSeo([
             'title'       => 'Post Title (SEO)',
             'description' => 'Post description (SEO)',
+            'keywords'    => ['keyword-1', 'keyword-2', 'keyword-3', 'keyword-4'],
             'metas'       => [
                 'twitter:title'       => 'Post title for twitter card',
                 'twitter:description' => 'Post description for twitter card',
@@ -55,6 +56,7 @@ class MetaTest extends TestCase
             'seoable_type' => Post::class,
             'title'        => 'Post Title (SEO)',
             'description'  => 'Post description (SEO)',
+            'keywords'     => json_encode(['keyword-1', 'keyword-2', 'keyword-3', 'keyword-4']),
             'noindex'      => 0
         ]);
 
@@ -86,7 +88,8 @@ class MetaTest extends TestCase
 
         // Update
         $post->updateSeo([
-            'title' => 'Updated Post Title (SEO)',
+            'title'    => 'Updated Post Title (SEO)',
+            'keywords' => ['keyword-1', 'keyword-2', 'keyword-3', 'keyword-4'],
         ]);
 
         $post = $post->fresh();
@@ -94,6 +97,9 @@ class MetaTest extends TestCase
         $this->assertTrue($post->hasSeo());
         $this->assertSame('Updated Post Title (SEO)', $post->seo->title);
         $this->assertSame('Post description (SEO)', $post->seo->description);
+        $this->assertInstanceOf(\Illuminate\Support\Collection::class, $post->seo->keywords);
+        $this->assertCount(4, $post->seo->keywords);
+        $this->assertSame(['keyword-1', 'keyword-2', 'keyword-3', 'keyword-4'], $post->seo->keywords->toArray());
     }
 
     /** @test */

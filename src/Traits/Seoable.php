@@ -33,7 +33,7 @@ trait Seoable
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Create a seo metas.
+     * Create a SEO Meta.
      *
      * @param  array  $attributes
      *
@@ -41,11 +41,13 @@ trait Seoable
      */
     public function createSeo(array $attributes)
     {
-        return $this->seo()->create($attributes);
+        return $this->seo()->create(
+            Meta::prepareAttributes($attributes)
+        );
     }
 
     /**
-     * Update a seo.
+     * Update a SEO Meta.
      *
      * @param  array  $attributes
      *

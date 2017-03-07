@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\LaravelSeo\Models;
 
 use Arcanedev\LaravelSeo\Seo;
+use Illuminate\Support\Arr;
 
 /**
  * Class     Meta
@@ -13,7 +14,7 @@ use Arcanedev\LaravelSeo\Seo;
  * @property  string                               seoable_type
  * @property  string                               title
  * @property  string                               description
- * @property  string                               keywords
+ * @property  \Illuminate\Support\Collection       keywords
  * @property  \Illuminate\Support\Collection       metas
  * @property  boolean                              noindex
  * @property  \Carbon\Carbon                       created_at
@@ -42,6 +43,7 @@ class Meta extends AbstractModel
     protected $casts = [
         'id'         => 'integer',
         'seoable_id' => 'integer',
+        'keywords'   => 'collection',
         'metas'      => 'collection',
         'noindex'    => 'boolean',
     ];
@@ -72,5 +74,27 @@ class Meta extends AbstractModel
     public function seoable()
     {
         return $this->morphTo();
+    }
+
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
+     */
+    /**
+     * Prepare the attributes.
+     *
+     * @param  array  $attributes
+     *
+     * @return array
+     */
+    public static function prepareAttributes(array $attributes)
+    {
+        return [
+            'title'       => Arr::get($attributes, 'title'),
+            'description' => Arr::get($attributes, 'description'),
+            'keywords'    => Arr::get($attributes, 'keywords', []),
+            'metas'       => Arr::get($attributes, 'metas', []),
+            'noindex'     => Arr::get($attributes, 'noindex', false),
+        ];
     }
 }
