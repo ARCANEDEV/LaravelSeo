@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\LaravelSeo\Tests\Models;
 
+use Arcanedev\LaravelSeo\Models\Meta;
 use Arcanedev\LaravelSeo\Tests\Stubs\Models\Post;
 use Arcanedev\LaravelSeo\Tests\TestCase;
 use Illuminate\Support\Collection;
@@ -148,6 +149,25 @@ class MetaTest extends TestCase
         $this->assertInstanceOf(Post::class, $seoable);
         $this->assertEquals($post->id,       $seoable->id);
         $this->assertEquals($post->title,    $seoable->title);
+    }
+
+    /** @test */
+    public function it_can_get_accessors()
+    {
+        $meta = new Meta([
+            'title'       => 'Post Title (SEO)',
+            'description' => 'Post description (SEO)',
+            'keywords'    => ['keyword-1', 'keyword-2', 'keyword-3', 'keyword-4'],
+        ]);
+
+        $this->assertSame(16, $meta->title_length);
+        $this->assertSame(22, $meta->description_length);
+        $this->assertSame(4,  $meta->keywords->count());
+        $this->assertSame(
+            'keyword-1, keyword-2, keyword-3, keyword-4',
+            $meta->keywords_string
+        );
+        $this->assertSame(42, $meta->keywords_length);
     }
 
     /* ------------------------------------------------------------------------------------------------
