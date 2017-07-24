@@ -10,10 +10,11 @@ use Arcanedev\Support\PackageServiceProvider;
  */
 class LaravelSeoServiceProvider extends PackageServiceProvider
 {
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Properties
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
      * Package name.
      *
@@ -21,10 +22,11 @@ class LaravelSeoServiceProvider extends PackageServiceProvider
      */
     protected $package = 'laravel-seo';
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     /**
      * Register the service provider.
      */
@@ -33,6 +35,8 @@ class LaravelSeoServiceProvider extends PackageServiceProvider
         parent::register();
 
         $this->registerConfig();
+
+        $this->registerProvider(Providers\RouteServiceProvider::class);
 
         $this->singleton(Contracts\RedirectorFactory::class, function ($app) {
             return new RedirectorManager($app);
@@ -45,8 +49,6 @@ class LaravelSeoServiceProvider extends PackageServiceProvider
     public function boot()
     {
         parent::boot();
-
-        $this->registerProvider(Providers\RouteServiceProvider::class);
 
         $this->publishConfig();
 

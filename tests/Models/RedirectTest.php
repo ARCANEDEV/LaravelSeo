@@ -16,8 +16,9 @@ class RedirectTest extends TestCase
      |  Tests
      | -----------------------------------------------------------------
      */
+
     /** @test */
-    public function it_can_create()
+    public function it_can_create_and_delete()
     {
         $redirect = Redirect::createOne(
             $old = '/old-url',
@@ -32,5 +33,13 @@ class RedirectTest extends TestCase
 
         // Assert the accessors
         $this->assertSame('[301] Moved Permanently', $redirect->status_name);
+
+        $redirect->delete();
+
+        $this->notSeeInDatabase('seo_redirects', [
+            'old_url' => $old,
+            'new_url' => $new,
+            'status'  => Response::HTTP_MOVED_PERMANENTLY,
+        ]);
     }
 }
