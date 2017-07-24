@@ -15,6 +15,7 @@ class RedirectorManager extends Manager implements RedirectorFactory
      |  Getters & Setters
      | -----------------------------------------------------------------
      */
+
     /**
      * Get the default driver name.
      *
@@ -29,6 +30,7 @@ class RedirectorManager extends Manager implements RedirectorFactory
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Get a driver instance.
      *
@@ -67,6 +69,7 @@ class RedirectorManager extends Manager implements RedirectorFactory
      |  Other Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Build the redirector.
      *

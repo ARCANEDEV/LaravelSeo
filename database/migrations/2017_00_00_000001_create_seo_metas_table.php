@@ -39,8 +39,8 @@ class CreateSeoMetasTable extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->string('keywords')->nullable();
-            $table->text('metas')->nullable();
             $table->boolean('noindex')->default(false);
+            $table->text('extras')->nullable();
             $table->timestamps();
         });
     }

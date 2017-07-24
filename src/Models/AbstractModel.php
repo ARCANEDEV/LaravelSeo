@@ -15,6 +15,7 @@ abstract class AbstractModel extends Model
      |  Constructor
      | -----------------------------------------------------------------
      */
+
     /**
      * Create a new Eloquent model instance.
      *

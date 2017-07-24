@@ -15,6 +15,22 @@ class RedirectStatuses
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
+    /**
+     * Get the all status codes.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function keys()
+    {
+        return collect([
+            Response::HTTP_MOVED_PERMANENTLY,
+            Response::HTTP_SEE_OTHER,
+            Response::HTTP_TEMPORARY_REDIRECT,
+            Response::HTTP_PERMANENTLY_REDIRECT,
+        ]);
+    }
+
     /**
      * Get the all status names.
      *
@@ -24,26 +40,9 @@ class RedirectStatuses
      */
     public static function all($locale = null)
     {
-        $codes = [
-            Response::HTTP_MOVED_PERMANENTLY,
-            Response::HTTP_SEE_OTHER,
-            Response::HTTP_TEMPORARY_REDIRECT,
-            Response::HTTP_PERMANENTLY_REDIRECT,
-        ];
-
-        return collect(array_combine($codes, $codes))->transform(function ($code) use ($locale) {
-            return Seo::getTrans("redirections.statuses.{$code}", [], $locale);
+        return static::keys()->mapWithKeys(function ($code) use ($locale) {
+            return [$code => Seo::getTrans("redirections.statuses.{$code}", [], $locale)];
         });
-    }
-
-    /**
-     * Get the all status codes.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public static function keys()
-    {
-        return static::all()->keys();
     }
 
     /**

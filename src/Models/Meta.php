@@ -15,8 +15,8 @@ use Illuminate\Support\Arr;
  * @property  string                               title
  * @property  string                               description
  * @property  \Illuminate\Support\Collection       keywords
- * @property  \Illuminate\Support\Collection       metas
  * @property  boolean                              noindex
+ * @property  \Illuminate\Support\Collection       extras
  * @property  \Carbon\Carbon                       created_at
  * @property  \Carbon\Carbon                       updated_at
  *
@@ -28,18 +28,20 @@ class Meta extends AbstractModel
      |  Traits
      | -----------------------------------------------------------------
      */
+
     use Presenters\MetaPresenter;
 
     /* -----------------------------------------------------------------
      |  Properties
      | -----------------------------------------------------------------
      */
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['title', 'description', 'keywords', 'metas', 'noindex'];
+    protected $fillable = ['title', 'description', 'keywords', 'noindex', 'extras'];
 
     /**
      * The attributes that should be casted to native types.
@@ -50,14 +52,15 @@ class Meta extends AbstractModel
         'id'         => 'integer',
         'seoable_id' => 'integer',
         'keywords'   => 'collection',
-        'metas'      => 'collection',
         'noindex'    => 'boolean',
+        'extras'     => 'collection',
     ];
 
     /* -----------------------------------------------------------------
      |  Constructor
      | -----------------------------------------------------------------
      */
+
     /**
      * Meta constructor.
      *
@@ -74,6 +77,7 @@ class Meta extends AbstractModel
      |  Relationships
      | -----------------------------------------------------------------
      */
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
@@ -86,6 +90,7 @@ class Meta extends AbstractModel
      |  Other Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Prepare the attributes.
      *
@@ -99,8 +104,51 @@ class Meta extends AbstractModel
             'title'       => Arr::get($attributes, 'title'),
             'description' => Arr::get($attributes, 'description'),
             'keywords'    => Arr::get($attributes, 'keywords', []),
-            'metas'       => Arr::get($attributes, 'metas', []),
+            'extras'      => Arr::get($attributes, 'extras', []),
             'noindex'     => Arr::get($attributes, 'noindex', false),
         ];
+    }
+
+    /**
+     * Add an extra meta.
+     *
+     * @param  string  $key
+     * @param  mixed   $value
+     *
+     * @return $this
+     */
+    public function addExtra($key, $value)
+    {
+        return $this->setExtras(
+            $this->extras->put($key, $value)->all()
+        );
+    }
+
+    /**
+     * Add extra metas.
+     *
+     * @param  mixed  $extras
+     *
+     * @return $this
+     */
+    public function addExtras($extras)
+    {
+        return $this->setExtras(
+            $this->extras->merge($extras)->all()
+        );
+    }
+
+    /**
+     * Set the extras.
+     *
+     * @param  mixed  $extras
+     *
+     * @return $this
+     */
+    public function setExtras($extras)
+    {
+        $this->extras = collect($extras);
+
+        return $this;
     }
 }

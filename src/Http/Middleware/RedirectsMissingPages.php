@@ -17,6 +17,7 @@ class RedirectsMissingPages
      |  Properties
      | -----------------------------------------------------------------
      */
+
     /** @var  \Arcanedev\LaravelSeo\Contracts\Redirector */
     protected $redirector;
 
@@ -24,6 +25,7 @@ class RedirectsMissingPages
      |  Constructor
      | -----------------------------------------------------------------
      */
+
     /**
      * RedirectsMissingPages constructor.
      *
@@ -38,6 +40,7 @@ class RedirectsMissingPages
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Handle the missing pages redirection.
      *
