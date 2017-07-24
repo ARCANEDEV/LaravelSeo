@@ -14,6 +14,7 @@ interface Redirector
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Get the redirect url.
      *

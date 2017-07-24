@@ -20,6 +20,7 @@ trait MetaPresenter
      |  Accessors
      | -----------------------------------------------------------------
      */
+
     /**
      * Get the `title_length` attribute.
      *

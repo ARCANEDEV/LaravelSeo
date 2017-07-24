@@ -16,6 +16,7 @@ class RedirectorManagerTest extends TestCase
      |  Properties
      | -----------------------------------------------------------------
      */
+
     /** @var  \Arcanedev\LaravelSeo\RedirectorManager */
     protected $manager;
 
@@ -23,6 +24,7 @@ class RedirectorManagerTest extends TestCase
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     public function setUp()
     {
         parent::setUp();
@@ -41,6 +43,7 @@ class RedirectorManagerTest extends TestCase
      |  Tests
      | -----------------------------------------------------------------
      */
+
     /** @test */
     public function it_can_be_instantiated()
     {
@@ -213,6 +216,7 @@ class RedirectorManagerTest extends TestCase
      |  Other Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Set the redirect URL.
      *

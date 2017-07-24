@@ -16,6 +16,7 @@ class RedirectStatusesTest extends TestCase
      |  Tests
      | -----------------------------------------------------------------
      */
+
     /** @test */
     public function it_can_get_all_keys()
     {
@@ -92,6 +93,7 @@ class RedirectStatusesTest extends TestCase
      |  Other Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Get the supported redirection codes.
      *

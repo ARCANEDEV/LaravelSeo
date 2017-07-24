@@ -6,6 +6,7 @@ return [
      |  Database
      | -----------------------------------------------------------------
      */
+
     'database' => [
         'connection' => null,
 
@@ -16,6 +17,7 @@ return [
      |  Tables
      | -----------------------------------------------------------------
      */
+
     'metas'     => [
         'table' => 'metas',
         'model' => \Arcanedev\LaravelSeo\Models\Meta::class,
@@ -30,6 +32,7 @@ return [
      |  Redirector
      | -----------------------------------------------------------------
      */
+
     'redirector' => [
         'enabled' => true,
 

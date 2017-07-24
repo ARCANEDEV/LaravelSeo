@@ -24,6 +24,7 @@ class Redirect extends AbstractModel
      |  Properties
      | -----------------------------------------------------------------
      */
+
     /**
      * The attributes that are mass assignable.
      *
@@ -44,6 +45,7 @@ class Redirect extends AbstractModel
      |  Constructor
      | -----------------------------------------------------------------
      */
+
     /**
      * Meta constructor.
      *
@@ -76,6 +78,7 @@ class Redirect extends AbstractModel
      |  Getters & Setters
      | -----------------------------------------------------------------
      */
+
     /**
      * Get the `status_name` attribute.
      *
@@ -90,6 +93,7 @@ class Redirect extends AbstractModel
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Create a redirect url.
      *
@@ -116,6 +120,7 @@ class Redirect extends AbstractModel
      |  Other Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Clear the cached data.
      */
