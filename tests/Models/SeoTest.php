@@ -12,10 +12,11 @@ use Illuminate\Support\Collection;
  */
 class SeoTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     public function setUp()
     {
         parent::setUp();
@@ -23,10 +24,11 @@ class SeoTest extends TestCase
         $this->migrate();
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Test Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Tests
+     | -----------------------------------------------------------------
      */
+
     /** @test */
     public function it_can_create()
     {
@@ -37,7 +39,7 @@ class SeoTest extends TestCase
         $post->createSeo([
             'title'       => 'Post Title (SEO)',
             'description' => 'Post description (SEO)',
-            'metas'       => [
+            'extras'      => [
                 'twitter:title'       => 'Post title for twitter card',
                 'twitter:description' => 'Post description for twitter card',
             ],
@@ -60,10 +62,10 @@ class SeoTest extends TestCase
 
         $seo = $seo->fresh();
 
-        $this->assertInstanceOf(Collection::class, $seo->metas);
-        $this->assertCount(2, $seo->metas);
-        $this->assertSame('Post title for twitter card',       $seo->metas->get('twitter:title'));
-        $this->assertSame('Post description for twitter card', $seo->metas->get('twitter:description'));
+        $this->assertInstanceOf(Collection::class, $seo->extras);
+        $this->assertCount(2, $seo->extras);
+        $this->assertSame('Post title for twitter card',       $seo->extras->get('twitter:title'));
+        $this->assertSame('Post description for twitter card', $seo->extras->get('twitter:description'));
         $this->assertFalse($seo->noindex);
     }
 
@@ -144,10 +146,11 @@ class SeoTest extends TestCase
         $this->assertEquals($post->title,    $seoable->title);
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
      */
+
     /**
      * Create post for test.
      *

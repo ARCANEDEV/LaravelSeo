@@ -13,10 +13,11 @@ use Illuminate\Support\Collection;
  */
 class MetaTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     public function setUp()
     {
         parent::setUp();
@@ -24,10 +25,11 @@ class MetaTest extends TestCase
         $this->migrate();
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Test Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Tests
+     | -----------------------------------------------------------------
      */
+
     /** @test */
     public function it_can_create()
     {
@@ -39,7 +41,7 @@ class MetaTest extends TestCase
             'title'       => 'Post Title (SEO)',
             'description' => 'Post description (SEO)',
             'keywords'    => ['keyword-1', 'keyword-2', 'keyword-3', 'keyword-4'],
-            'metas'       => [
+            'extras'      => [
                 'twitter:title'       => 'Post title for twitter card',
                 'twitter:description' => 'Post description for twitter card',
             ],
@@ -63,10 +65,10 @@ class MetaTest extends TestCase
 
         $seo = $seo->fresh();
 
-        $this->assertInstanceOf(Collection::class, $seo->metas);
-        $this->assertCount(2, $seo->metas);
-        $this->assertSame('Post title for twitter card',       $seo->metas->get('twitter:title'));
-        $this->assertSame('Post description for twitter card', $seo->metas->get('twitter:description'));
+        $this->assertInstanceOf(Collection::class, $seo->extras);
+        $this->assertCount(2, $seo->extras);
+        $this->assertSame('Post title for twitter card',       $seo->extras->get('twitter:title'));
+        $this->assertSame('Post description for twitter card', $seo->extras->get('twitter:description'));
         $this->assertFalse($seo->noindex);
     }
 
@@ -170,10 +172,86 @@ class MetaTest extends TestCase
         $this->assertSame(42, $meta->keywords_length);
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
-     | ------------------------------------------------------------------------------------------------
+    /** @test */
+    public function it_can_add_an_extra()
+    {
+        $post = $this->createPost();
+
+        $post->createSeo([
+            'title'       => 'Post Title (SEO)',
+            'description' => 'Post description (SEO)',
+            'keywords'    => ['keyword-1', 'keyword-2', 'keyword-3', 'keyword-4'],
+        ]);
+
+        $post = $post->fresh();
+
+        $this->assertTrue($post->hasSeo());
+
+        $seo = $post->seo;
+
+        $this->assertCount(0, $seo->extras);
+
+        $seo->addExtra('twitter:title', 'Post title for twitter card');
+
+        $this->assertCount(1, $seo->extras);
+        $this->assertTrue($seo->extras->has('twitter:title'));
+
+        $seo->addExtra('twitter:description', 'Post description for twitter card');
+
+        $this->assertCount(2, $seo->extras);
+        $this->assertTrue($seo->extras->has('twitter:description'));
+    }
+
+    /** @test */
+    public function it_can_add_or_set_extras()
+    {
+        $post = $this->createPost();
+
+        $post->createSeo([
+            'title'       => 'Post Title (SEO)',
+            'description' => 'Post description (SEO)',
+            'keywords'    => ['keyword-1', 'keyword-2', 'keyword-3', 'keyword-4'],
+        ]);
+
+        $post = $post->fresh();
+
+        $this->assertTrue($post->hasSeo());
+
+        $seo = $post->seo;
+
+        $this->assertCount(0, $seo->extras);
+
+        $seo->addExtras([
+            'twitter:title'       => 'Post title for twitter card',
+            'twitter:description' => 'Post description for twitter card'
+        ]);
+
+        $this->assertCount(2, $seo->extras);
+        $this->assertTrue($seo->extras->has('twitter:title'));
+        $this->assertTrue($seo->extras->has('twitter:description'));
+
+        $seo->addExtras([
+            'twitter:card'  => 'summary',
+            'twitter:title' => 'ARCANEDEV - Post title for twitter card',
+        ]);
+
+        $this->assertCount(3, $seo->extras);
+        $this->assertTrue($seo->extras->has('twitter:title'));
+        $this->assertTrue($seo->extras->has('twitter:description'));
+        $this->assertTrue($seo->extras->has('twitter:card'));
+
+        $this->assertSame('ARCANEDEV - Post title for twitter card', $seo->extras->get('twitter:title'));
+
+        $seo->setExtras([]);
+
+        $this->assertCount(0, $seo->extras);
+    }
+
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
      */
+
     /**
      * Create post for test.
      *
