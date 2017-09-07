@@ -39,7 +39,7 @@ trait Seoable
      *
      * @param  array  $attributes
      *
-     * @return \Arcanedev\LaravelSeo\Models\Meta
+     * @return \Arcanedev\LaravelSeo\Models\Meta|mixed
      */
     public function createSeo(array $attributes)
     {

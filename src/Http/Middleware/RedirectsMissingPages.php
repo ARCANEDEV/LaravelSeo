@@ -56,8 +56,6 @@ class RedirectsMissingPages
         if ($response->getStatusCode() !== Response::HTTP_NOT_FOUND)
             return $response;
 
-        $redirectResponse = $this->redirector->getRedirectFor($request);
-
-        return $redirectResponse ? $redirectResponse : $response;
+        return $this->redirector->getRedirectFor($request) ?: $response;
     }
 }

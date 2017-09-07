@@ -1,19 +1,23 @@
 <?php
 
 use Arcanedev\LaravelSeo\Bases\Migration;
+use Arcanedev\LaravelSeo\Seo;
 use Illuminate\Database\Schema\Blueprint;
 
 /**
  * Class     CreateSeoMetasTable
  *
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ *
+ * @see \Arcanedev\LaravelSeo\Models\Meta
  */
 class CreateSeoMetasTable extends Migration
 {
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Constructor
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
      * CreateSeoMetasTable constructor.
      */
@@ -21,13 +25,14 @@ class CreateSeoMetasTable extends Migration
     {
         parent::__construct();
 
-        $this->setTable('metas');
+        $this->setTable(Seo::getConfig('metas.table', 'metas'));
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     /**
      * {@inheritdoc}
      */

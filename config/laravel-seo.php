@@ -20,12 +20,12 @@ return [
 
     'metas'     => [
         'table' => 'metas',
-        'model' => \Arcanedev\LaravelSeo\Models\Meta::class,
+        'model' => Arcanedev\LaravelSeo\Models\Meta::class,
     ],
 
     'redirects' => [
         'table' => 'redirects',
-        'model' => \Arcanedev\LaravelSeo\Models\Redirect::class,
+        'model' => Arcanedev\LaravelSeo\Models\Redirect::class,
     ],
 
     /* -----------------------------------------------------------------
@@ -40,7 +40,7 @@ return [
 
         'drivers' => [
             'config' => [
-                'class'   => \Arcanedev\LaravelSeo\Redirectors\ConfigurationRedirector::class,
+                'class'   => Arcanedev\LaravelSeo\Redirectors\ConfigurationRedirector::class,
 
                 'options' => [
                     'redirects' => [
@@ -51,7 +51,7 @@ return [
             ],
 
             'eloquent' => [
-                'class'   => \Arcanedev\LaravelSeo\Redirectors\EloquentRedirector::class,
+                'class'   => Arcanedev\LaravelSeo\Redirectors\EloquentRedirector::class,
 
                 'options' => [
                     'cache' => [

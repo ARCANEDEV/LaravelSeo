@@ -14,6 +14,7 @@ class ConfigurationRedirector extends AbstractRedirector implements Redirector
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Get the redirected URLs.
      *
