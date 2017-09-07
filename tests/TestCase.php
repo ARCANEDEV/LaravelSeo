@@ -1,7 +1,7 @@
 <?php namespace Arcanedev\LaravelSeo\Tests;
 
 use Arcanedev\LaravelSeo\Seo;
-use Orchestra\Testbench\BrowserKit\TestCase as BaseTestCase;
+use Orchestra\Testbench\TestCase as BaseTestCase;
 
 /**
  * Class     TestCase
@@ -91,27 +91,6 @@ abstract class TestCase extends BaseTestCase
         $router->get('response-code/{code}', function ($code) {
             abort($code);
         });
-    }
-
-    /* -----------------------------------------------------------------
-     |  Custom Assert Methods
-     | -----------------------------------------------------------------
-     */
-
-    /**
-     * Assert whether the client was redirected to a given URI.
-     *
-     * @param  string  $uri
-     * @param  array   $with
-     *
-     * @return self
-     */
-    public function assertRedirectedTo($uri, $with = [])
-    {
-        self::assertInstanceOf(\Illuminate\Http\RedirectResponse::class, $this->response);
-        self::assertEquals($this->app['url']->to($uri), $this->response->headers->get('Location'));
-
-        return $this;
     }
 
     /* -----------------------------------------------------------------
