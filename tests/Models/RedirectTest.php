@@ -25,7 +25,7 @@ class RedirectTest extends TestCase
             $new = '/new-url'
         );
 
-        $this->seeInDatabase('seo_redirects', [
+        $this->assertDatabaseHas('seo_redirects', [
             'old_url' => $old,
             'new_url' => $new,
             'status'  => Response::HTTP_MOVED_PERMANENTLY,
@@ -36,7 +36,7 @@ class RedirectTest extends TestCase
 
         $redirect->delete();
 
-        $this->notSeeInDatabase('seo_redirects', [
+        $this->assertDatabaseMissing('seo_redirects', [
             'old_url' => $old,
             'new_url' => $new,
             'status'  => Response::HTTP_MOVED_PERMANENTLY,

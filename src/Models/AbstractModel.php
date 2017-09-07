@@ -1,7 +1,7 @@
 <?php namespace Arcanedev\LaravelSeo\Models;
 
 use Arcanedev\LaravelSeo\Seo;
-use Arcanedev\Support\Bases\Model;
+use Arcanedev\Support\Database\Model;
 
 /**
  * Class     AbstractModel

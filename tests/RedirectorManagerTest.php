@@ -117,8 +117,8 @@ class RedirectorManagerTest extends TestCase
     /** @test */
     public function it_will_not_interfere_with_existing_pages()
     {
-        $this->visit('existing-page')
-             ->see('existing page');
+        $this->get('existing-page')
+             ->assertSeeText('existing page');
     }
 
     /** @test */
@@ -128,11 +128,10 @@ class RedirectorManagerTest extends TestCase
             'non-existing-page' => 'existing-page',
         ]);
 
-        $this->get('non-existing-page');
+        $response = $this->get('non-existing-page');
 
-        $this->assertRedirectedTo('existing-page');
-
-        $this->assertResponseStatus(Response::HTTP_MOVED_PERMANENTLY);
+        $response->assertStatus(Response::HTTP_MOVED_PERMANENTLY);
+        $response->assertRedirect('existing-page');
     }
 
     /** @test */
@@ -142,9 +141,9 @@ class RedirectorManagerTest extends TestCase
             'non-existing-page' => '/existing-page',
         ]);
 
-        $this->get('/not-configured');
+        $response = $this->get('/not-configured');
 
-        $this->assertResponseStatus(Response::HTTP_NOT_FOUND);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     /** @test */
@@ -154,9 +153,10 @@ class RedirectorManagerTest extends TestCase
             'segment1/{id}/segment2/{slug}' => 'segment2/{slug}',
         ]);
 
-        $this->get('segment1/123/segment2/abc');
+        $response = $this->get('segment1/123/segment2/abc');
 
-        $this->assertRedirectedTo('segment2/abc');
+        $response->assertStatus(Response::HTTP_MOVED_PERMANENTLY);
+        $response->assertRedirect('segment2/abc');
     }
 
     /** @test */
@@ -166,9 +166,10 @@ class RedirectorManagerTest extends TestCase
             'new-segment/{id}-{slug}' => 'new-segment/{id}',
         ]);
 
-        $this->get('new-segment/123-blablabla');
+        $response = $this->get('new-segment/123-blablabla');
 
-        $this->assertRedirectedTo('new-segment/123');
+        $response->assertStatus(Response::HTTP_MOVED_PERMANENTLY);
+        $response->assertRedirect('new-segment/123');
     }
 
     /** @test */
@@ -178,10 +179,10 @@ class RedirectorManagerTest extends TestCase
             'temporarily-moved' => ['just-for-now', Response::HTTP_FOUND],
         ]);
 
-        $this->get('temporarily-moved');
+        $response = $this->get('temporarily-moved');
 
-        $this->assertRedirectedTo('just-for-now');
-        $this->assertResponseStatus(Response::HTTP_FOUND);
+        $response->assertRedirect('just-for-now');
+        $response->assertStatus(Response::HTTP_FOUND);
     }
 
     /** @test */
@@ -191,25 +192,28 @@ class RedirectorManagerTest extends TestCase
             'old-segment/{parameter1?}/{parameter2?}' => 'new-segment',
         ]);
 
-        $this->get('old-segment');
+        $response = $this->get('old-segment');
 
-        $this->assertRedirectedTo('new-segment');
+        $response->assertStatus(Response::HTTP_MOVED_PERMANENTLY);
+        $response->assertRedirect('new-segment');
 
         $this->get('old-segment/old-segment2');
 
-        $this->assertRedirectedTo('new-segment');
+        $response->assertStatus(Response::HTTP_MOVED_PERMANENTLY);
+        $response->assertRedirect('new-segment');
 
         $this->get('old-segment/old-segment2/old-segment3');
 
-        $this->assertRedirectedTo('new-segment');
+        $response->assertStatus(Response::HTTP_MOVED_PERMANENTLY);
+        $response->assertRedirect('new-segment');
     }
 
     /** @test */
     public function it_will_not_redirect_requests_that_are_not_404s()
     {
-        $this->get('response-code/500');
+        $response = $this->get('response-code/500');
 
-        $this->assertResponseStatus(500);
+        $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /* -----------------------------------------------------------------
