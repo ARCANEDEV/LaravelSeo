@@ -17,6 +17,10 @@ class RouteServiceProvider extends ServiceProvider
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
+    /**
+     * Bootstrap any application services.
+     */
     public function boot()
     {
         if (Seo::getConfig('redirector.enabled', false))

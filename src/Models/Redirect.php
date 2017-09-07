@@ -65,6 +65,7 @@ class Redirect extends AbstractModel
     {
         parent::boot();
 
+        // Extract these methods to Event/Listener Classes
         static::saved(function() {
             static::clearCache();
         });
@@ -126,8 +127,8 @@ class Redirect extends AbstractModel
      */
     protected static function clearCache()
     {
-        $key = Seo::getConfig('redirector.drivers.eloquent.options.cache.key', 'seo-redirects');
-
-        cache()->forget($key);
+        cache()->forget(
+            Seo::getConfig('redirector.drivers.eloquent.options.cache.key', 'seo-redirects')
+        );
     }
 }

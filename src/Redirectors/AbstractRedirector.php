@@ -4,6 +4,7 @@ use Arcanedev\LaravelSeo\Contracts\Redirector;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\Routing\Registrar as Router;
 
 /**
  * Class     AbstractRedirector
@@ -17,7 +18,8 @@ abstract class AbstractRedirector implements Redirector
      |  Properties
      | -----------------------------------------------------------------
      */
-    /** @var \Illuminate\Routing\Router */
+
+    /** @var \Illuminate\Contracts\Routing\Registrar */
     protected $router;
 
     /** @var  \Illuminate\Http\Request */
@@ -30,12 +32,14 @@ abstract class AbstractRedirector implements Redirector
      |  Constructor
      | -----------------------------------------------------------------
      */
+
     /**
      * AbstractRedirector constructor.
      *
-     * @param  array  $options
+     * @param  \Illuminate\Contracts\Routing\Registrar  $router
+     * @param  array                                    $options
      */
-    public function __construct($router, array $options)
+    public function __construct(Router $router, array $options)
     {
         $this->router  = $router;
         $this->options = $options;
@@ -62,6 +66,7 @@ abstract class AbstractRedirector implements Redirector
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Get the redirect url.
      *

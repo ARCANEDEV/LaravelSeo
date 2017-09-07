@@ -15,6 +15,7 @@ class EloquentRedirector extends AbstractRedirector implements Redirector
      |  Main Methods
      | -----------------------------------------------------------------
      */
+
     /**
      * Get the redirected URLs.
      *

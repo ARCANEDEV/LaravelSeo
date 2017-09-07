@@ -1,33 +1,38 @@
 <?php
 
 use Arcanedev\LaravelSeo\Bases\Migration;
+use Arcanedev\LaravelSeo\Seo;
 use Illuminate\Database\Schema\Blueprint;
 
 /**
  * Class     CreateSeoRedirectsTable
  *
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ *
+ * @see \Arcanedev\LaravelSeo\Models\Redirect
  */
 class CreateSeoRedirectsTable extends Migration
 {
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Constructor
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
-     * CreateSeoMetasTable constructor.
+     * CreateSeoRedirectsTable constructor.
      */
     public function __construct()
     {
         parent::__construct();
 
-        $this->setTable('redirects');
+        $this->setTable(Seo::getConfig('redirects.table', 'redirects'));
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     /**
      * {@inheritdoc}
      */
